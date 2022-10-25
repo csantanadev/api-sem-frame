@@ -7,9 +7,9 @@ class UserRepository {
         this.client = client;
     }
 
-    async create({ name, username, email }) {
+    async create({ name, username, email, password }) {
         const id = randomUUID();
-        await this.client.query("insert into users (id, name, username, email) values ($1, $2, $3, $4)", [id, name, username, email]);
+        await this.client.query("insert into users (id, name, username, email, password) values ($1, $2, $3, $4, $5)", [id, name, username, email, password]);
         return { id, name, username, email };
     }
 
@@ -18,8 +18,8 @@ class UserRepository {
         return result.rows;
     }
 
-    async update(id, { name, username, email }) {
-        await this.client.query('update users set name = $1, username = $2, email = $3 where id = $4', [name, username, email, id])
+    async update(id, { name, username, email, password }) {
+        await this.client.query('update users set name = $1, username = $2, email = $3, password = $4 where id = $5', [name, username, email, password, id])
         return { id, name, username, email }
     }
 

@@ -1,11 +1,15 @@
 const UserRepository = require('../repository/user.repository')
+const { createHmac } = require("crypto")
 
 class UserService {
 
     constructor() { }
 
     async create(body) {
-        const user = await UserRepository.create(body);
+        const { password } = body
+        const pwdEncrypt = createHmac('sha256', password).digest('hex')
+        let user = { ...body, password: pwdEncrypt }
+        user = await UserRepository.create(user);
         return user;
     }
 
@@ -15,8 +19,12 @@ class UserService {
         if (!user) {
             throw new Error('user not found')
         }
+
+        const { password } = body
+        const pwdEncrypt = createHmac('sha256', password).digest('hex')
+
         // merge de props
-        const userModif = { ...user, ...body }
+        const userModif = { ...user, ...body, password: pwdEncrypt }
 
         const result = await UserRepository.update(id, userModif)
         return result;

@@ -3,15 +3,13 @@ const UserService = require('../services/user.service')
 class UserController {
 
     constructor() {
-        console.log('constructor UserController')
-        this.userService = new UserService()
     }
 
     async post(req, res) {
 
         try {
             const { body } = req;
-            const result = await this.userService.create(body)
+            const result = await UserService.create(body)
             res.statusCode = 201;
             return res.end(JSON.stringify(result))
         }
@@ -21,9 +19,10 @@ class UserController {
         }
     }
 
+
     async get(req, res) {
 
-        const result = await this.userService.findAll()
+        const result = await UserService.findAll()
         return res.end(JSON.stringify(result))
 
     }
@@ -31,7 +30,7 @@ class UserController {
     async getById(req, res) {
 
         const { id } = req.params;
-        const result = await this.userService.findById(id)
+        const result = await UserService.findById(id)
         return res.end(JSON.stringify(result))
 
     }
@@ -41,7 +40,7 @@ class UserController {
             const { id } = req.params;
             const { body } = req;
 
-            await this.userService.update(id, body);
+            await UserService.update(id, body);
             res.statusCode = 204
             return res.end()
         }
@@ -59,14 +58,10 @@ class UserController {
     }
 
     async delete(req, res) {
-
         const { id } = req.params;
-        const result = await this.userService.delete(id)
+        const result = await UserService.delete(id)
         return res.end(JSON.stringify(result))
-
     }
-
-
 }
 
-module.exports = UserController
+module.exports = new UserController()

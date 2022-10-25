@@ -4,7 +4,6 @@ const { client } = require('../database')
 class UserRepository {
 
     constructor() {
-        console.log('constructor UserRepository')
         this.client = client;
     }
 
@@ -37,4 +36,4 @@ class UserRepository {
 
 }
 
-module.exports = UserRepository
+module.exports = new UserRepository()

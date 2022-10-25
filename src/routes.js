@@ -1,26 +1,30 @@
 const UserController = require('./controllers/user.controller')
-const userController = new UserController()
 
 const router = [
     {
         url: "/users",
         method: "GET",
-        controller: userController.get
+        controller: UserController.get
     },
     {
         url: "/users/:id",
         method: "GET",
-        controller: userController.getById
+        controller: UserController.getById
     },
     {
         url: "/users",
         method: "POST",
-        controller: userController.post
+        controller: UserController.post
     },
     {
         url: "/users/:id",
         method: "PUT",
-        controller: userController.put
+        controller: UserController.put
+    },
+    {
+        url: "/users/:id",
+        method: "DELETE",
+        controller: UserController.delete
     }
 ]
 

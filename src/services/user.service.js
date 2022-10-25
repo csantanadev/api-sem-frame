@@ -1,21 +1,16 @@
 const UserRepository = require('../repository/user.repository')
 
-
 class UserService {
 
-    constructor() {
-        console.log('constructor UserService')
-        this.userRepository = new UserRepository();
-    }
+    constructor() { }
 
     async create(body) {
-        const user = await this.userRepository.create(body);
+        const user = await UserRepository.create(body);
         return user;
     }
 
     async update(id, body) {
-
-        const user = await this.userRepository.getById(id);
+        const user = await UserRepository.getById(id);
 
         if (!user) {
             throw new Error('user not found')
@@ -23,24 +18,24 @@ class UserService {
         // merge de props
         const userModif = { ...user, ...body }
 
-        const result = await this.userRepository.update(id, userModif)
+        const result = await UserRepository.update(id, userModif)
         return result;
     }
 
     async findAll() {
-        const result = await this.userRepository.findAll();
+        const result = await UserRepository.findAll();
         return result;
     }
 
     async findById(id) {
-        const result = await this.userRepository.getById(id);
+        const result = await UserRepository.getById(id);
         return result;
     }
 
     async delete(id) {
-        const result = await this.userRepository.delete(id);
+        const result = await UserRepository.delete(id);
         return result;
     }
 }
 
-module.exports = UserService
+module.exports = new UserService()
